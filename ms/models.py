@@ -1,5 +1,9 @@
 from django.db import models
 
+def user_directory_path(instance, filename): 
+  
+    # file will be uploaded to MEDIA_ROOT / user_<id>/<filename> 
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
 class Type(models.Model):
     type_name = models.CharField(max_length=20)
 
@@ -22,7 +26,8 @@ class Node_Data(models.Model):
 class Gateway(models.Model):
     gateway_description = models.CharField(max_length=100)
     gateway_MAC = models.IntegerField(unique=True)
-    gateway_image = models.ImageField(upload_to='ms/static/image',null=True)
+    gateway_image = models.ImageField(upload_to='uploads/',null = True, blank = True)
+
 
 #class Users(models.Model):
  #   users_name = models.CharField(max_length=15)

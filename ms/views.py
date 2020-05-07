@@ -4,10 +4,14 @@ from .models import Node, Gateway
 from .forms import NodeForm, GatewayForm
 
 def index(request):
-    
+    gate = request.GET.get('gateway')
     device = Node.objects.all()[:5]
     gateways = Gateway.objects.all()[:5]
-    return render(request,'base.html',{'devices': device,'gateways':gateways })
+    if gate:
+        selected = Gateway.objects.get(id = gate)
+    else:
+        selected = Gateway.objects.get(id = 1)
+    return render(request,'base.html',{'devices': device,'gateways':gateways, 'selected': selected})
 
 def node(request,id_node):
     device = Node.objects.get(pk = id_node)
